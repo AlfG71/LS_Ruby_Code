@@ -1,12 +1,9 @@
-# Write a program that iterates over an array and builds a new array that is the result of incrementing each value in the original array by a value of 2. You should have two arrays at the end of this program, The original array and the new array you've created. Print both arrays to the screen using the p method instead of puts.
+hash1 = {shoes: "nike", "hat" => "adidas", :hoodie => true}
+hash2 = {"hat" => "adidas", :shoes => "nike", hoodie: true}
 
-array1 = [1, 2, 3]
-
-def plus2(ary)
-	ary.each {|x| p (x + 2)}
+if hash1 == hash2
+  puts "These hashes are the same!"
+else
+  puts "These hashes are not the same!"
 end
 
-
-p plus2(array1)
-p array1.map {|num| num + 2}
-p array1
