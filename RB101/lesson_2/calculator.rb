@@ -147,4 +147,4 @@ end
     break unless answer.downcase.start_with?('y')
 end
 
-prompt(messages('thanks', 'en'))
+prompt(messages('thanks', 'es'))

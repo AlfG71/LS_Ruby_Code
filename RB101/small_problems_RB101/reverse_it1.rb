@@ -1,39 +1,48 @@
+# Write a method that takes one argument, a string, and returns a new string with the words in reverse order.
 
-def reverse_sentence(word)
-	word = []
-	#str = ''
-	word.reverse_each {|word| p "#{word} "}
+=begin
+  P  (Understand the problem)
+    -Write a method that takes one argument
+    -The argument for the method is a string
+    -The method will return the string 
+    -The words in the string will be in a reverse order
 
-	#str.split.reverse do
-  #str.reverse {|x| puts x, ''}
+  E  (Examples)
+
+    -puts reverse_sentence('') == ''
+    -puts reverse_sentence('Hello World') == 'World Hello'
+    -puts reverse_sentence('Reverse these words') == 'words these Reverse'
+
+      -The tests above should print true.
+
+  D  (Data strructures)
+    Input:
+
+      -String
+      -Method
+    Output:
+      
+      -String
+  
+  A  (Algorithm)
+    -Define method called reverse_sentence(string)
+    -Turn string sentence into an array
+    -Reverse the array and turn it back into a string
+
+  C
+    def reverse_sentence(string)
+    	sentence = string.split
+    	sentence.reverse
+    end
+=end
+
+
+def reverse_sentence(string)
+   string.split.reverse.join(' ')
 end
 
 puts reverse_sentence('') == ''
-puts reverse_sentence('Hello World') == 'World 	Hello'
-puts reverse_sentence('Reverse these words') == 	'words these Reverse'
+puts reverse_sentence('Hello World') == 'World Hello'
+puts reverse_sentence('Reverse these words') == 'words these Reverse'
 
-# * Write a method that takes one argument, a string, and returns a new string with the words in reverse order.
 
-# * The tests cases should print true.
-
-# =begin
-# *  Problem
-# 	-A method taking one string argument
-# 	-The method returns a new string with the words from the original string argument in reverse order
-
-# * Example test cases
-# 	-puts reverse_sentence('') == ''
-# 	-puts reverse_sentence('Hello World') == 'World 	Hello'
-# 	-puts reverse_sentence('Reverse these words') == 	'words these Reverse'
-
-# * Data structure
-# 	-Input: String
-
-# 	-Output: String
-
-# * Algorithm
-# 	1. Define method with one string argument
-# 	2. Use method to reverse the words in the string within the method definition
-# 	3.Test method 
-	
-#  * Code
