@@ -1,9 +1,10 @@
-require "pry" # add this to use Pry
+def name
+  "George"
+end
 
-counter = 0
+name = "Lisa"
 
 loop do
-  counter += 1
-  binding.pry
-  break if counter == 5  
+  puts name
+  break
 end
