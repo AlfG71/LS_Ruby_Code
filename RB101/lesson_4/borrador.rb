@@ -1,12 +1,4 @@
-PASSWORD = "SecreT"
-USERNAME = "John"
-
-loop do
-  puts "Please enter a username."
-  username = gets.chomp
-  puts "Please enter your password."
-  password = gets.chomp
-  break if password == PASSWORD && username == "John"
-  puts "Authorization failed!"
+ [2, 5, 3, 4, 1].sort do |a, b|
+  puts "a is #{a} and b is #{b}"  
+  a <=> b
 end
-p "Welcome!"

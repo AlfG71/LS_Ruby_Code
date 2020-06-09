@@ -1,21 +1,21 @@
 final_integer = []
 puts "==> Enter the 1st number:"
-first_number = gets.chomp
+first_number  = gets.chomp
 final_integer << first_number 
 puts "==> Enter the 2nd number:"
 second_number = gets.chomp
 final_integer << second_number 
 puts "==> Enter the 3rd number:"
-third_number = gets.chomp
+third_number  = gets.chomp
 final_integer << third_number 
 puts "==> Enter the 4th number:"
 fourth_number = gets.chomp
 final_integer << fourth_number 
 puts "==> Enter the 5th number:"
-fifth_number = gets.chomp
+fifth_number  = gets.chomp
 final_integer << fifth_number 
 puts "==> Enter the last number:"
-last_number = gets.chomp
+last_number   = gets.chomp
 
 if final_integer.include?(last_number)
 puts "The number #{last_number} appears in #{final_integer}."

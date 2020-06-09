@@ -5,23 +5,18 @@ munsters = {
        "Eddie" => { "age" => 10, "gender" => "male" },
        "Marilyn" => { "age" => 23, "gender" => "female"}
      }
-     munsters_arr = munsters.to_a 
-     counter = 0
-        #we need to apply the counter to a key instead and then convert back to a hash?
-     loop do 
-       break if counter == munsters.size
-       munsters_age = munsters_arr[counter][1].dig("age")
-         if munsters_age <= 18
-	   	     munsters[counter]["age_group"] = "kid"
-	   	   elsif munsters_age > 18 && munsters_age < 64
-	   		   munsters[counter]["age_group"] = "adult"
-	   		 else
-	   			munsters[counter]["age_group"] = "senior"
-	   		 end
-	   	 counter += 1
-	   	 
-	   	 munsters
-	   end
+
+munsters.each do |k, v|
+	if v['age'] < 18
+		v['age_group'] = 'kid'
+	elsif v['age'] > 18 && v['age'] < 64
+		v['age_group'] = 'adult'
+	else
+		v['age_group'] = 'senior'
+	end
+end
+
+puts munsters
 
 # Given the munsters hash below
 
