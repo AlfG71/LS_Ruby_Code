@@ -8,14 +8,23 @@
 def oddities(arr)
   counter = 0
   new_arr = []
+  
   loop do
+  break if counter >= arr.size
   arr[counter]
   new_arr << arr[counter]
   counter += 2
-  break if counter >= arr.size 
   end
-  p new_arr
+
+  new_arr
 end
+
+#OR 
+
+# def oddities(arr)
+# 	arr.select.with_index { |num, i| i.even? }
+# end
+
 p oddities([2, 3, 4, 5, 6])    == [2, 4, 6]
 p oddities([1, 2, 3, 4, 5, 6]) == [1, 3, 5]
 p oddities(['abc', 'def'])     == ['abc']
