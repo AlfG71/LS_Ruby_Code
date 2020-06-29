@@ -53,3 +53,10 @@ male_munsters.each do |k, v|
   age_total << v['age']
 end
 p age_total.sum
+
+# OR
+
+# total_male_age = 0
+# munsters.each_value do |details|
+#   total_male_age += details["age"] if details["gender"] == "male"
+# end
