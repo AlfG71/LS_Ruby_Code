@@ -27,8 +27,18 @@
   -define method string_to_integer(str)
   -convert string characters into an array of elements with the string characters representing each element in the new array
   -evaluate the array elements 
+  
+  C
+	def string_to_integer(str)
+	  digits = str.chars.map { |char| DICTIONARY_HASH[char] 
+	  
+	  value = 0
+	  digits.each { |digit| value = 10 * value + digit }
+	  value
+	end
 
 =end
+require 'pry'
 
 DICTIONARY_HASH = {
   '0' => 0,
@@ -43,23 +53,16 @@ DICTIONARY_HASH = {
   '9' => 9,
 }
 
-# def string_to_integer(str)
-#   new_arr = str.chars
-#   int_arr= new_arr.map do |char|
-#     DICTIONARY_HASH[char]
-#   end
-#   integer = int_arr.shift(0..-1)
-# end
-
 def string_to_integer(str)
-  digits = str.chars.map { |char| DICTIONARY_HASH[char] }
+  new_arr = str.chars
+  int_arr= new_arr.map {|char| DICTIONARY_HASH[char]}
 
   value = 0
-  digits.each { |digit| value = 10 * value + digit }
+  int_arr.each {|num| value = 10 * value + num}
   value
 end
  
-p string_to_integer('4321') #== 4321
-p string_to_integer('570')
+p string_to_integer('4321') == 4321
+p string_to_integer('570')  == 570
 
   

@@ -1,41 +1,12 @@
-# Improved "join"
-
-# If we run the current game, we'll see the following prompt:
-
-# => Choose a position to place a piece: 1, 2, 3, 4, 5, 6, 7, 8, 9
-# This is ok, but we'd like for this message to read a little better. We want to separate the last item with a "or", so that it reads:
-
-# => Choose a position to place a piece: 1, 2, 3, 4, 5, 6, 7, 8, or 9
-# Currently, we're using the Array#join method, which can only insert a delimiter between the array elements, and isn't smart enough to display a joining word for the last element.
-
-# Write a method called joinor that will produce the following result:
-
-# joinor([1, 2])                   # => "1 or 2"
-# joinor([1, 2, 3])                # => "1, 2, or 3"
-# joinor([1, 2, 3], '; ')          # => "1; 2; or 3"
-# joinor([1, 2, 3], ', ', 'and')   # => "1, 2, and 3"
-# Then, use this method in the TTT game when prompting the user to mark a square.
-
-=begin 
-  P
-  -create a method that takes and array of integers as a parameter
-  -the method will take that array and create a new array with the same elements separated by a string argument
-  -it will also insert that string argument where denoted in the parameter
-
-  E
-
-  D
-
-  A
-
-  C
+=begin
+  -create a scoreboard
+    -scoreboard key are strings and values integers
+  -keep track of the wins
+  -identify when one of the players collects 5 wins
+  -exit program
+  {}
 =end
-
-
-
-
-require 'pry'
-
+SCOREBOARD = {'X' => 0, 'O' => 0}
 INITIAL_MARKER = ' '
 PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
@@ -72,24 +43,22 @@ def empty_squares(brd)
 	brd.keys.select {|num| brd[num] == INITIAL_MARKER}  #returns an array of numbers indicating the options left to play 
 end																										#this would be the places where there is still room to play and on the original hash have a value of ' '
 
-def joinor(brd, punctuation = ', ', word = 'or')  #****START OF NEW METHOD FOR BONUS FEATURES*****
-  brd[-1] = word + ' ' + brd[-1].to_s
+def joinor(brd, punctuation = ', ', preposition = 'or')  #*START OF NEW METHOD FOR BONUS FEATURES*****
+  brd[-1] = preposition + ' ' + brd[-1].to_s
   if brd.length <= 2 
     brd.join(' ')
   else  
     brd.join(punctuation)
-    #binding.pry
   end
 end
 
 def player_places_piece!(brd)	
   square = ''
 	loop do
-		#binding.pry
-	prompt "Choose a square (#{joinor(empty_squares(brd))}):"  #returns the options available spaced by a coma
+	prompt "Choose a square (#{empty_squares(brd).join(', ')}):"  #returns the options available spaced by a coma
 	square = gets.chomp.to_i
 	break if empty_squares(brd).include?(square)
-		prompt "Sorry, that's not a valid choice."
+		prompt "Sorry, that's not valid choice."
 	end
 
 	brd[square] = PLAYER_MARKER
@@ -127,6 +96,22 @@ def detect_winner(brd)
   nil
 end
 
+def win_tracker(brd)
+  SCOREBOARD['X'] += 1 if detect_winner(brd) == 'Player'
+  SCOREBOARD['O'] += 1 if detect_winner(brd) == 'Computer' 
+  nil
+end
+
+def declare_winner
+  if SCOREBOARD['X'] == 5
+    return 'Player has won 5 games and you rule!'
+  elsif SCOREBOARD['O'] == 5
+    return 'Computer has won 5 games and you suck!'
+  else
+    nil
+  end
+end
+
 loop do
 	board = initialize_board
 
@@ -142,11 +127,14 @@ loop do
 
 	display_board(board)
 
-	if someone_won?(board)
+  if someone_won?(board)
+    win_tracker(board)
 		prompt "#{detect_winner(board)} won!"
 	else
 		prompt "It's a tie!"
 	end
+  
+  break if declare_winner
 
 	prompt "Play again? (y or n)"
 	answer = gets.chomp

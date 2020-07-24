@@ -1,33 +1,13 @@
+def joinor(brd, punctuation = ' ', preposition = 'or')
+  brd[-1] = preposition + ' ' + brd[-1].to_s
+  # if brd.length < 2
+  #   brd.join(punctuation = ', ')
+  # else
+  brd.join(punctuation)
+  # end
+end
 
-
-customer_orders = [
-  {
-    customer_id: 12,
-    customer_name: 'Emma Lopez',
-    orders: [
-      { order_fulfilled: true, order_value: 135.99 },
-      { order_fulfilled: true, order_value: 289.49 },
-      { order_fulfilled: false, order_value: 58.00 }
-    ]
-  },
-  {
-    customer_id: 32,
-    customer_name: 'Michael Richards',
-    orders: [
-      { order_fulfilled: true, order_value: 120.00 },
-      { order_fulfilled: false, order_value: 85.65 }
-    ]
-  },
-  # rest of data...
-]
-
-# fulfilled_orders =[
-#   {customer_id: 12, customer_name: 'Emma Lopez', order_value: 425.48},
-#   {customer_id: 32, customer_name: 'Michael Richards', order_value: 120.00},
-#   # rest of data
-# ]
-
-
-
-p all_orders
-
+p joinor([1, 2])                   # => "1 or 2"
+p joinor([1, 2, 3])                # => "1, 2, or 3"
+p joinor([1, 2, 3], '; ')          # => "1; 2; or 3"
+p joinor([1, 2, 3], ', ', 'and')   # => "1, 2, and 3"
