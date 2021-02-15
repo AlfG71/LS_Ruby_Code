@@ -1,0 +1,48 @@
+# PEDAC TEMPLATE: 
+
+=begin
+
+Understand the problem:
+
+-Establish the rules / define the boundaries of the problem
+  -Assess all the available information of the problem
+  -Restate Explicit requirements (stated in problem)
+  -Identify Implicit requirements (not stated in problem)
+
+
+* Problem *
+
+
+* Description Restated *
+
+
+
+
+* Rules and Requirements *
+
+- Explicit requirements:
+
+
+- Questions:
+  -
+
+-Implicit requirements
+
+
+  * Examples *
+
+  Example problem:
+
+
+
+* Data Structures *
+(this step is sometimes overlooked, but consider the data structure of your input and output, and look at the methods each of them have available to help you solve the problem.)
+
+
+
+* Algorithm * (high level, avoid implementation details)
+
+=end
+
+# Code:
+

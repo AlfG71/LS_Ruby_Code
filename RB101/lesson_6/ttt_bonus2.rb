@@ -55,8 +55,8 @@ end
 def player_places_piece!(brd)	
   square = ''
 	loop do
-	prompt "Choose a square (#{empty_squares(brd).join(', ')}):"  #returns the options available spaced by a coma
-	square = gets.chomp.to_i
+	  prompt "Choose a square (#{empty_squares(brd).join(', ')}):"  #returns the options available spaced by a coma
+	  square = gets.chomp.to_i
 	break if empty_squares(brd).include?(square)
 		prompt "Sorry, that's not valid choice."
 	end

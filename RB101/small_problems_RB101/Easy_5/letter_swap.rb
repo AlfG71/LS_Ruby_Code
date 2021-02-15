@@ -5,8 +5,8 @@
 =begin
 Problem
 
--write a method that takes a string of words as an argument
--it will return the string of words with the first and last letters of every word swapped
+-Create a method that takes a string argument of letters and spaces and returns a string of the same value with the first and last letter of each individual word swapped
+-Assume every word contains at least one letter and that each string is valid and contains just letters and spaces
 
 # Examples:
 
@@ -21,33 +21,27 @@ Output = string
 
 Algorithm
 
--take a method with a string parameter
-  -iterate over each word in the string and place into a new collection object
-    -iterate over the elements in the new object
-      -if the word has more than one letter take the first and last letters of the word and swap their places
-    -create a new string from the collection object
--return the evaluated resulting string with swapped letters
+1) Create a method definition
+  -swap(str)
 
-Code
+2) Separate all individual words into elements
+  -str.split
+
+3) Swap the first letter for the last letter in each individual word by reassignment
+  -str[0] = str[-1] and str[-1] = str[0]  
+
+4) Join all the individual words back into one string
+  -str.split.join
+
+5) Return new string  
+
 =end
 
-def swap(string)
-  swapped_array = string.split # array of words
-  first_letter = ''
-  last_letter = ''
-  resulting_string = []
-  
-  swapped_array.each do |word|
-    if word.length < 2
-      resulting_string << word
-    else
-      first_letter = word.slice!(0)
-      last_letter = word.slice!(-1)
-      resulting_string << last_letter + word + first_letter
-    end
-  
+def swap(str)
+  result = str.split.each do |word|
+    word[0], word[-1] = word[-1], word[0]
   end
-  resulting_string.join(' ')
+  result.join(' ')
 end
 
 p swap('Oh what a wonderful day it is') == 'hO thaw a londerfuw yad ti si'

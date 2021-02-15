@@ -2,141 +2,132 @@
 
 # New centuries begin in years that end with 01. So, the years 1901-2000 comprise the 20th century.
 
-=begin 
-  P (understand the Problem)
-    -create a new method that takes an integer as an argument
-    -the body of the method will evaluate the integer as a year in time
-    -the evaluation will calculate the century the year was in
-    -the method will print out a string stating the century number ending with the appropriate suffix (st, nd, rd, or th)
-    -keeping in mind that new centuries begin in years that end with 01. So, the years 1901-2000 comprise the 20th century 
+=begin
+  Problem:
 
-  E (Examples)
-    -century(2000) == '20th'
-    -century(2001) == '21st'
-    -century(1965) == '20th'
-    -century(256) == '3rd'
-    -century(5) == '1st'
-    -century(10103) == '102nd'
-    -century(1052) == '11th'
-    -century(1127) == '12th'
-    -century(11201) == '113th'
+  - Create a method that takes a year as an input and returns the century that year falls on
+  - It will return a string consisiting of the century number ending with the corresponding suffix to the ending number of the string (st, nd, rd, or th)
 
-  D (Data structures)
-    Input:
-      -Integer
-    Output:
-      -String
+  Examples:
+  
+  -century(2000) == '20th'
+  -century(2001) == '21st'
+  -century(1965) == '20th'
+  -century(256) == '3rd'
+  -century(5) == '1st'
+  -century(10103) == '102nd'
+  -century(1052) == '11th'
+  -century(1127) == '12th'
+  -century(11201) == '113th'
 
-  A (Algorithm)
-    -create a method definition that takes an integer argument ( century(year) )
-    -evaluate the integer (year) as a calculation of what year in time it falls 
-    -translate the calculation into the century the year falls in
-    -output the name of the century as a string with the proper suffix appended to the century number
-    -end the method definition
- 
-  C  (Code)
-    def century(year)
-    	
+  Data Structures:
+    Input  = Integer
+    Output = String
 
+  Rules: 
+    if century ends in 1 then returning string ends in "st" except for the teens
+    if century ends in 2 then returning string ends in "nd" except for the teens
+    if century ends in 3 then returning string ends in "rd" except for the teens
+    everythig else the string ends in 'th' 
+    new century starts in year ending on 01
+    if the year ends in 00 it is part of the previous century
+
+  Algorithm:
+  
+    1) Create a method definition century(year)
+      -if 0 - 100 then "1st"
+      -elsif 101 - 999 then (num[0] + 1) = century  
+      -elsif 1000 - 9999 then (num[0, 1] + 1) = century
+      -else num[0, 1, 2] + 1 = century
+      -convert argument into a string
+    2) Create a helper method to figure out the century and add the corresponding suffix suffix(int)
+      -add appropriate suffix using helper method
+        - if int ends in 1 && int[-2] != 1 then suffix == 'st'
+        -elsif int ends in 2 && int[-2] != 1 then suffix == 'nd'
+        -elsif int ends in 3 && int[-2] != 1 then suffix == 'rd'
+        -else suffix == 'th'
+    2) Convert the integer argument into a string and add the suffix
+    3) Add the appropriate suffix to the converted integer
+    4) Return the new String
 
 =end
 
-# # Write a method that takes a year as input and returns the century. The return value should be a string that begins with the century number, and ends with st, nd, rd, or th as appropriate for that number.
+# def century(year)
+#   century = year / 100 + 1
+#   century -= 1 if year % 100 == 0
+#   century.to_s + century_suffix(century)
+# end
 
-# # New centuries begin in years that end with 01. So, the years 1901-2000 comprise the 20th century.
+# def century_suffix(century)                             LS SOLUTION
+#   return 'th' if [11, 12, 13].include?(century % 100)
+#   last_digit = century % 10
 
-# =begin 
-#   P (understand the Problem)
-#     -create a new method that takes an integer as an argument
-#     -the body of the method will evaluate the integer as a year in time
-#     -the evaluation will calculate the century the year was in
-#     -the method will print out a string stating the century number ending with the appropriate suffix (st, nd, rd, or th)
-#     -keeping in mind that new centuries begin in years that end with 01. So, the years 1901-2000 comprise the 20th century 
+#   case last_digit
+#   when 1 then 'st'
+#   when 2 then 'nd'
+#   when 3 then 'rd'
+#   else 'th'
+#   end
+# end
 
-#   E (Examples)
-#     -century(2000) == '20th'
-#     -century(2001) == '21st'
-#     -century(1965) == '20th'
-#     -century(256) == '3rd'
-#     -century(5) == '1st'
-#     -century(10103) == '102nd'
-#     -century(1052) == '11th'
-#     -century(1127) == '12th'
-#     -century(11201) == '113th'
+# def century(year)
+#   century = 0
 
-#   D (Data structures)
-#     Input:
-#       -Integer
-#     Output:
-#       -String
+#   if (0..100).include?(year)
+#     century = 1
+#   elsif year.to_s[-1, 2].to_i == 00
+#     century = year.to_s[0, 2].to_i 
+#   elsif (101..999).include?(year) && year.to_s[-1].to_i != 1
+#     century = year.to_s[0].to_i + 1 
+#   elsif (1000..9999).include?(year) && year.to_s[-1].to_i != 1
+#     century = year.to_s[0, 2].to_i + 1
+#   elsif (1000..9999).include?(year) && year.to_s[-1].to_i == 1
+#     century = year.to_s[0, 2].to_i + 1
+#   else (10000..99999).include?(year) 
+#     century = year.to_s[0, 3].to_i + 1 
+#   end    
 
-#   A (Algorithm)
-#     main flow
-#     -create a method definition that takes an integer as an argument ( century(year) ) 
-#     -use method year_to_century() to translate the (year) into the century the year falls in 
-#     -output the name of the century as a string with the proper suffix appended to the century number
-#        -new method to translate the century as a string with the proper suffix
-#     -end the method definition
- 
-#       method implementation
-#       -year_to_century(year)
-#           century, remainder = year.divmod(100)
-#           if remainder == 0
-#             century
-#           else
-#             century + 1
-      
-#       century_suffix(century)
-#             convert century to string
-#             compare the ending of the century
-#             append appropriate suffix to century
-#             if century ends in the number 1 suffix is st
-#             elsif century ends in the number 2 suffix nd
-#             elsif century ends in the number 3 suffix rd
-#             else suffix th
-            
-          
-          #   C  (Code)
+#   suffix(century)
+# end
 
-def year_to_century(year)
-  century, remainder = year.divmod(100)
-  if remainder == 0
-    century
-  else
-    century + 1
+# def suffix(num)
+#   unless num.to_s[-2].to_i == 1
+#     if num.to_s[-1].to_i == 1
+#       return num.to_s + 'st'
+#     elsif num.to_s[-1].to_i == 2
+#       return num.to_s + 'nd'
+#     elsif num.to_s[-1].to_i == 3
+#       return num.to_s + 'rd'
+#     end
+#   end
+
+#   num.to_s + 'th'
+# end
+
+def suffix(century)
+  exceptions = %w(11 12 13)
+
+  return century.to_s + "th" if exceptions.include?(century.to_s[-2, 2])
+
+  case century.digits.reverse.last
+  when 1 then century.to_s + "st"
+  when 2 then century.to_s + "nd"
+  when 3 then century.to_s + "rd"
+  else century.to_s + "th"
   end
-end
-
-def century_suffix(century)
-  century_string = century.to_s
-  
-  final = if century_string[-1] == '1'
-            century_string + 'st'
-          elsif century_string[-1] == '2'
-            century_string + 'nd'
-          elsif century_string[-1] == '3'
-            century_string + 'rd'
-          else
-            century_string + 'th'
-          end
-  
-  if century_string[-2..-1] == '11' || century_string[-2..-1] == '12' ||                  century_string[-2..-1] =='13'
-    final = century_string + 'th'
-  end
-
-  final
 end
 
 def century(year)
-  century_suffix(year_to_century(year))
-end
+  century = (year / 100) 
 
-# p year_to_century(1052)
-# p year_to_century(1127)
-# p year_to_century(11201)
-# p century_suffix(20) == '20th'
-# p century_suffix(21) == '21st'
-# p century_suffix(23) == '23rd'
+  if year.digits.reverse.last == 0
+    century 
+  else
+    century += 1
+  end
+
+  suffix(century)
+end
 
 p century(2000) == '20th'
 p century(2001) == '21st'
@@ -147,4 +138,3 @@ p century(10103) == '102nd'
 p century(1052) == '11th'
 p century(1127) == '12th'
 p century(11201) == '113th'
-

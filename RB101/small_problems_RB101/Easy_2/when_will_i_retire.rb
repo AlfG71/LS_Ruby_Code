@@ -1,58 +1,48 @@
-puts "What is your age?"
-age = gets.chomp.to_i
-puts "At what age would you like to retire?"
-retirement_age = gets.chomp.to_i
-
-time_to_retire = retirement_age - age
-current_year = 2020
-
-retirement_year = current_year + time_to_retire
-
-puts "It's #{current_year}.  You will retire in #{retirement_year}"
-puts "You only have #{time_to_retire} years of work to go!"
-
-
 # Build a program that displays when the user will retire and how many years she has to work till retirement.
 
 =begin
-  P  (understand the Problem)
-       -create a program that prints the following
-         -when the user will retire
-         -how long the user has to work until retirement
+  
+Problem:
 
-  E  (Examples)
-       -What is your age? 30
-       -At what age would you like to retire? 70
+ -Create a program that asks the user what their age is and at whar age they will retire
+ -It will return the current year, a value equal to the number of years the user has to work until retirement and what year it will be when they retire. 
 
-       -It's 2016. You will retire in 2056.
-       -You have only 40 years of work to go!
+Example:
 
-  D  (Data structures)
-       Input:
-         -Integer
-       Output:
-         -String
+=> What is your age? 30
+=> At what age would you like to retire? 70
 
-  A  (Algorithm)
-       -get user input "What is your age?"
-       -create new (age) variable and store user input
-       -get user input "At what age would you like to retire?"
-       -create new (retirement_age) variable and store second user input
-       -create (current_year = 2020) variable
-       -calculate how long it will take to reach the retirement age from the current age
-       -create (retirement_year) variable and store calculation result
-       -output "It's 2020.  You will retire in #{retirement_year}"
-       -output "You only have #{time_to_retire} years of work to go!"
+=> It's 2016. You will retire in 2056.
+=> You have only 40 years of work to go!
 
-  C  (Code)
-       puts "What is your age?"
-       age = gets.chomp
-       puts "At what age would you like to retire?"
-       retirement_age = gets.chomp
-       time_to_retire = retirement_age - age
-       current_year = 2020
-       retirement_year = current_year + time_to_retire
-       puts "It's #{current_year}.  You will retire in #{retirement_year}"
-       puts "You only have #{time_to_retire} years of work to go!"
+Data Structures:
+
+Input  = Integer
+Output = String
+
+Algorithm
+
+1) Ask for user input by printing a string "What is your age?"
+2) Store the age value in a new variable
+3) Ask for user input by printing the string "At what age would you like to retire?"
+4) Store the retirement age value in a new variable
+5) Output the current year
+6) Output the expected year of retirement
+  a) Use the difference between the user age and the retirement age and add that value to the current year
+7) Output the number of years left until retirement
+  a) Use the difference between the user age and the retirement age  
 
 =end
+
+puts "What is your age?"
+age = gets.chomp.to_i
+
+puts "At what age would you like to retire?"
+retirement_age = gets.chomp.to_i
+
+retirement_gap = retirement_age - age
+current_year = Time.now.year
+
+puts "It's #{current_year}"
+puts "You will retire in #{current_year + retirement_gap}"
+puts "You only have #{retirement_gap} years of work to go!"

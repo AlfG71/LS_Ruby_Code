@@ -1,48 +1,50 @@
-
 # Write a method that takes one argument, a positive integer, and returns a string of alternating 1s and 0s, always starting with 1. The length of the string should match the given integer.
 
 =begin
-  P  (Understand the problem)
-      -We have to write a method that takes one argument
-      -The argument must be a positive integer
-      -The method returns a string
-      -The returned string must be of alternating 1s and 0s always starting with the number 1
-      -The length of the returned string must match the integer taken as an argument on the method
+ Problem: 
+ -Create a method that takes one integer argument
+ -It will return a string
+ -The string will consist of alternating 1s and 0s always starting at 1
+ -The length of the returned string will have a value that is the same as the integer argument that was passed into the method definition 
+
+ Example:
+ -puts stringy(6) == '101010'
+ -puts stringy(9) == '101010101'
+ -puts stringy(4) == '1010'
+ -puts stringy(7) == '1010101'
+
+ Data Structure:
+ Input  = Integer
+ Output = String
+
+ Algorithm
+  1) Create a method definition that takes an integer argument stringy(num)
+  2) Create an empty collection object result = []
+  3) Count up from 1 up to the value of the integer argument
+    a) if the number counted is odd
+      - append the string '1' to the collection object
+    b) if it is even
+      - append the string '0' to the collection object
+  4) Convert all the number strings into a single string of 1s and 0s
+  5) Return the single string       
+
   
-  E  (Examples)
-      -puts stringy(6) == '101010'    => true    
-      -puts stringy(9) == '101010101' => true
-      -puts stringy(4) == '1010'      => true
-      -puts stringy(7) == '1010101'   => true
-
-  D  (Data structures)
-      Input:
-        -Method
-        -Integer
-
-      Output:
-        -String
-
-  A  (Algorithm)
-      -Define a method called stringy(integer)
-      -convert the integer argument into a string 
-      -the string alternates 1s and 0s and equals the length of the value of the integer
-
-  C  (Code)
-
 =end
 
-def stringy(size)
-	numbers = []
+def stringy(int)
+  result = []
 
-	size.times do |index|
-  number = index.even? ? 1 : 0
-  numbers << number
-end
-	numbers.join
+  1.upto(int) do |num|
+    if num.odd?
+      result << '1'
+    else  
+      result << '0'
+    end
+  end
+  result.join
 end
 
-puts stringy(6) == '101010'        
-puts stringy(9) == '101010101' 
-puts stringy(4) == '1010'      
+puts stringy(6) == '101010'
+puts stringy(9) == '101010101'
+puts stringy(4) == '1010'
 puts stringy(7) == '1010101'

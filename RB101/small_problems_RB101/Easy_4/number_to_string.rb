@@ -28,19 +28,38 @@ Algorithm
 Code 
 =end
 
-
-NUMBERS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+NUMBER_TO_STRING = {0 => '0', 1 => '1', 2 => '2', 3 => '3', 4 => '4', 5 => '5', 6 => '6', 7 => '7', 8 => '8', 9 => '9'}
 
 def integer_to_string(int)
-  number_string = ''
-  number_array = int.digits.reverse # array of digits
-  
-  number_array.each do |n|
-    number_string << NUMBERS[n] #=> index within the NUMBERS constant
-  end
-  number_string
+  int_arr = int.digits.reverse
+  result = int_arr.map {|num| NUMBER_TO_STRING[num]}
+
+  result.join
 end
 
 p integer_to_string(4321) == '4321'
 p integer_to_string(0) == '0'
 p integer_to_string(5000) == '5000'
+
+
+
+
+
+
+
+
+# NUMBERS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+# def integer_to_string(int)
+#   number_string = ''
+#   number_array = int.digits.reverse # array of digits
+  
+#   number_array.each do |n|
+#     number_string << NUMBERS[n] #=> index within the NUMBERS constant
+#   end
+#   number_string
+# end
+
+# p integer_to_string(4321) == '4321'
+# p integer_to_string(0) == '0'
+# p integer_to_string(5000) == '5000'

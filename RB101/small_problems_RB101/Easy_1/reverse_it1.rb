@@ -1,45 +1,44 @@
 # Write a method that takes one argument, a string, and returns a new string with the words in reverse order.
 
 =begin
-  P  (Understand the problem)
-    -Write a method that takes one argument
-    -The argument for the method is a string
-    -The method will return the string 
-    -The words in the string will be in a reverse order
+  Problem:
 
-  E  (Examples)
+  Create a method that takes one String argument
+  The method will return a new string with the same length and words as the original string
+  The new string will have the words in reverse order (backwards)
+    If a word was first in the sentence in the argument, it will be returned last in the new string and viceversa
+  It will return an empty string if the original argument is an empty string
 
-    -puts reverse_sentence('') == ''
-    -puts reverse_sentence('Hello World') == 'World Hello'
-    -puts reverse_sentence('Reverse these words') == 'words these Reverse'
 
-      -The tests above should print true.
+Examples:
 
-  D  (Data strructures)
-    Input:
+puts reverse_sentence('') == ''
+puts reverse_sentence('Hello World') == 'World Hello'
+puts reverse_sentence('Reverse these words') == 'words these Reverse'
+The tests above should print true.  
 
-      -String
-      -Method
-    Output:
-      
-      -String
-  
-  A  (Algorithm)
-    -Define method called reverse_sentence(string)
-    -Turn string sentence into an array
-    -Reverse the array and turn it back into a string
+Data Structures:
 
-  C
-    def reverse_sentence(string)
-    	sentence = string.split
-    	sentence.reverse
-    end
+  Input  = String
+  Output = String
+
+Algorithm
+
+1) create a method definition with a string argument reverse_sentence(str)
+2) break down the string into separate words
+3) place the separated words into an array object
+4) reverse the words in the array
+5) place the reversed words out of the array 
+6) return the reversed wrods String
+ 
 =end
 
-def reverse_sentence(string)
-   string.split.reverse.join(' ')
+def reverse_sentence(str)
+  str.split.reverse.join(' ')
 end
 
 puts reverse_sentence('') == ''
 puts reverse_sentence('Hello World') == 'World Hello'
 puts reverse_sentence('Reverse these words') == 'words these Reverse'
+
+

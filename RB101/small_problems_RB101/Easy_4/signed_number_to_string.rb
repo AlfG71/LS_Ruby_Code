@@ -29,36 +29,25 @@ Algorithm
 Code
 =end
 
-#STRING_NUMBERS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
-require 'pry'
-#binding.pry
+NUMBER_TO_STRING = {0 => '0', 1 => '1', 2 => '2', 3 => '3', 4 => '4', 5 => '5', 6 => '6', 7 => '7', 8 => '8', 9 => '9'}
 
-NUMBERS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+def integer_to_string(int)
+  int_arr = int.abs.digits.reverse
+  result = int_arr.map {|num| NUMBER_TO_STRING[num]}
 
-def signed_integer_to_string(int)
-  number_string = ''
-  number_array = int.abs.digits.reverse # array of digits
-  
-   number_array.each do |n|
-     if int.positive?
-      number_string << NUMBERS[n] #=> index within the NUMBERS constant
-     elsif int.negative?
-      number_string << NUMBERS[n]
-     else
-      number_string << NUMBERS[n]
-    end
-   end
-  
-     if int > 0
-       "+" + number_string
-     elsif int < 0
-       "-" + number_string
-     else  
-       number_string
-     end
+  result.join
 end
 
+def signed_integer_to_string(int)
+  if int == 0
+    integer_to_string(int)
+  elsif int < 0 
+      '-' + integer_to_string(int)
+  else 
+      '+' + integer_to_string(int)
+  end
+end
 
 p signed_integer_to_string(4321) == '+4321'
 p signed_integer_to_string(-123) == '-123'

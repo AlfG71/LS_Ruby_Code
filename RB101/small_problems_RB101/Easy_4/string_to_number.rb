@@ -6,6 +6,43 @@
 
 # You may not use any of the standard conversion methods available in Ruby, such as String#to_i, Integer(), etc. Your method should do this the old-fashioned way and calculate the result by analyzing the characters in the string.
 
+# DIGITS = {
+#   '0' => 0, '1' => 1, '2' => 2, '3' => 3, '4' => 4,  #LS solution
+#   '5' => 5, '6' => 6, '7' => 7, '8' => 8, '9' => 9
+# }
+
+# def string_to_integer(string)
+#   digits = string.chars.map { |char| DIGITS[char] }
+
+#   value = 0
+#   digits.each { |digit| value = 10 * value + digit }
+#   value
+# end
+
+ DIGITS = { '0' => 0, '1' => 1, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6, '7' => 7, '8' => 8, '9' => 9}
+
+def string_to_integer(str)
+  new_arr = str.chars
+  arr_of_int = new_arr.map {|num| DIGITS[num]}
+   
+  value = 0
+  arr_of_int.each {|int| value = value * 10 + int}
+
+  value
+end
+
+p string_to_integer('4321') #== 4321
+p string_to_integer('570') #== 570
+
+
+
+
+
+
+
+
+
+
 =begin 
   P
   -create a method that takes a string of digits as an argument
@@ -38,31 +75,31 @@
 	end
 
 =end
-require 'pry'
+# require 'pry'
 
-DICTIONARY_HASH = {
-  '0' => 0,
-  '1' => 1,
-  '2' => 2,
-  '3' => 3,
-  '4' => 4,
-  '5' => 5,
-  '6' => 6,
-  '7' => 7,
-  '8' => 8,
-  '9' => 9,
-}
+# DICTIONARY_HASH = {
+#   '0' => 0,
+#   '1' => 1,
+#   '2' => 2,
+#   '3' => 3,
+#   '4' => 4,
+#   '5' => 5,
+#   '6' => 6,
+#   '7' => 7,
+#   '8' => 8,
+#   '9' => 9,
+# }
 
-def string_to_integer(str)
-  new_arr = str.chars
-  int_arr= new_arr.map {|char| DICTIONARY_HASH[char]}
+# def string_to_integer(str)
+#   new_arr = str.chars
+#   int_arr = new_arr.map {|char| DICTIONARY_HASH[char]}
 
-  value = 0
-  int_arr.each {|num| value = 10 * value + num}
-  value
-end
+#   value = 0                                         =>  10 * 0 + 4 -> 4
+#   int_arr.each {|num| value = 10 * value + num}     =>  10 * 4 + 3 -> 43
+#   value                                             =>  10 * 43 + 1 -> 431
+# end
  
-p string_to_integer('4321') == 4321
-p string_to_integer('570')  == 570
+# p string_to_integer('4321') == 4321
+# p string_to_integer('570')  == 570
 
   

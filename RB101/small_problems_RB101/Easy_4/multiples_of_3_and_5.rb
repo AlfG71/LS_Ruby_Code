@@ -3,74 +3,46 @@
 # You may assume that the number passed in is an integer greater than 1.
 
 =begin
-	P
-	-write a method multisum(int) that takes an integer as a parameter
-	-the method will first evaluate all the multiples of 3 and 5 and return them
-	-the method will then take the multiples and add them together
-	-it will then return that sum as the return value of the method
+  Problem:
 
-	E
-	Examples
+    - create a method that takes one number as an argument
+    -The method will search for all the numbers starting at 1 up to the number argument and select the ones that are multiples of 3 or 5
+    -It will return the sum of all the numbers selected	
 
-		multisum(3) == 3
-		multisum(5) == 8
-		multisum(10) == 33
-		multisum(1000) == 234168
+	Examples:
 
-	D
-	Input
-	  -Integer
-	Output
-	  -Integer
+	-multisum(3) == 3
+  -multisum(5) == 8
+  -multisum(10) == 33
+  -multisum(1000) == 234168
 
-	A
-	-create a new method multisum(int)
-	  -evaluate the integer for multiples of 3 and 5
-	  -place the selection of those multiples of 3 and 5 in a new collection object
-  -evaluate the elements inside the new collection object and add them together
-  -return the total of that evaluation
+  Data Structures:
 
-	C
-	def multisum(int)
-		all_numbers = []
-		  
-		  loop do |int|
-      all_numbers << int
-      break if int == 1
-      int -= 1
-      end
+    Input  = Integer
+    Output = Integer
 
-    multiples = []  
-    all_numbers.each do |element|
-      counter = 1
-      multiples << element if int % 3 == 0 && int % 5 == 0
-    end  
-    multiples.sum 
-	  end
+  Algorithm:
 
+  1) Create a method definition multisum(num)
+  2) Create a new collection object arr = []
+  3) Count from 1 up to the number argument and store all the numbers in the new array arr
+    -1.upto(num) << arr
+  4) Select the numbers that are multiples of 3 or 5  
+    -arr.select
+  5) return the sum of the selected numbers  
+    -arr.select.sum
 =end
 
-def multisum(int)
-	all_numbers = []
-	
-	loop do
-    all_numbers.unshift(int)
-    break if int == 1
-    int -= 1
-  end
-  
-  all_numbers
-  multiples = []
-  
-  counter = all_numbers.length 
- 
-  loop do 
-  	multiples.unshift(all_numbers[counter - 1]) if all_numbers[counter - 1] % 3 == 0 || all_numbers[counter - 1] % 5 == 0 
-  	break if counter == 1
-  	counter -= 1  
-  end  
- 
-  multiples.sum
+# def multisum(num)     #FURTHER EXPLORATION WITH REDUCE METHOD
+# 	result = []
+# 	1.upto(num) {|all_numbers| result << all_numbers}
+# 	result.select {|multiples| multiples % 3 == 0 || multiples % 5 == 0}.reduce(:+)
+# end
+
+def multisum(num)
+	result = []
+	1.upto(num) {|all_numbers| result << all_numbers}
+	result.select {|multiples| multiples % 3 == 0 || multiples % 5 == 0}.sum
 end
 
 p multisum(3) == 3

@@ -1,74 +1,83 @@
-puts ">> Please enter an integer greater than 0:"
-number = gets.chomp.to_i
-
-puts ">> Enter 's' to compute the sum, 'p' to compute the product,"
-calculation = gets.chomp
-
-sum_calculation = (1..number).inject {|sum, n| sum + n}
-product_calculation = (1..number).inject(1) {|product, n| product * n}
-
-if calculation == 's'
-puts "The sum of the integers between 1 and #{number} is #{sum_calculation}."
-else
-puts "The product of the integers between 1 and #{number} is #{product_calculation}."
-end	
-
 # Write a program that asks the user to enter an integer greater than 0, then asks if the user wants to determine the sum or product of all numbers between 1 and the entered integer.
 
-=begin 
-  P  (understand the Problem)
-       -Create a program that asks the user for an integer input greater than the integer zero
-       -The program will ask if the user wants the addition or multiplication of all the integers between the integer 1 and the integer the user inputed
-       -The program will calculate either the addition or the multiplication of the user input
-       -The program will output the result of the calculation
+=begin
+  
+Problem:
+-Create a program that ask for user input of an integer greater than 0 and then asks the user if they want to add or multiply all the numbers between 1 and the inputed number
+-Return the sum or product of all the numbers between 1 and the user inputed number
+  
+Examples:
 
-  E  (Examples)
-       ->> Please enter an integer greater than 0:
-       -5
-       ->> Enter 's' to compute the sum, 'p' to compute the product.
-       -s
-       -The sum of the integers between 1 and 5 is 15.
-
-
-       ->> Please enter an integer greater than 0:
-       -6
-       ->> Enter 's' to compute the sum, 'p' to compute the product.
-       -p
-       -The product of the integers between 1 and 6 is 720.
-
-  D  (Data structures)
-       Input:
-         -Integer
-         -String
-       Output:
-         -String
-
-  A  (Algorithm)
-      -get user input: puts ">> Please enter an integer greater than 0:"
-      -store user input in new variable (number = gets.chomp)
-      -get user input: puts ">> Enter 's' to compute the sum, 'p' to compute the product,"
-      -store user input in a new variable (calculation = gets.chomp)
-      -create new variable (sum_calculation = (1..num).sum)
-      -create new variable (product_calculation = (1..num).reduce(1, :*))
-      -evaluate calculation variable between the strings 's' or 'p'
-      -Assign calculation evaluation input 's' to sum_calculation, 'p' to product_calculation
-      -if calculation == 's' output "The sum of the integers between 1 and #{number} is #{sum_calculation}."
-      -if calculation == 'p' output "The product of the integers between 1 and #{number} is #{product_calculation}"	
+>> Please enter an integer greater than 0:
+5
+>> Enter 's' to compute the sum, 'p' to compute the product.
+s
+The sum of the integers between 1 and 5 is 15.
 
 
-  C  (Code)
-       puts ">> Please enter an integer greater than 0:"
-       number = gets.chomp
-       puts ">> Enter 's' to compute the sum, 'p' to compute the product,"
-       calculation = gets.chomp
+>> Please enter an integer greater than 0:
+6
+>> Enter 's' to compute the sum, 'p' to compute the product.
+p
+The product of the integers between 1 and 6 is 720.
 
-       sum_calculation = (1..num).sum
-       product_calculation = (1..num).reduce(1, :*)
+Data Structures:
 
-       if calculation == 's'
-       	puts "The sum of the integers between 1 and #{number} is #{sum_calculation}."
+Input  = Integer
+Output = String
 
-       	else
-       		puts "The product of the integers between 1 and #{number} is #{product_calculation}."	
+Algorithm:
+
+1) Ask for user input "=>  Please enter an integer greater than 0:"
+2) Store the integer value in a new variable user_input
+3) Ask for user input 's' for sum or 'p' for multiply
+  -if 's'
+    -add all the numbers from 1 upto the user input number
+  -else
+    -multiply all the numbers from 1 upto the user input number  
+4) Return the corresponding result     
 
 =end
+
+puts "=>  Please enter an integer greater than 0:"
+user_input = gets.chomp.to_i
+
+puts "=>  Enter 's' to compute the sum, 'p' to compute the product."
+calculation = gets.chomp
+
+if calculation == 's'
+  puts "The sum of the integers between 1 and #{user_input} is #{(1..user_input).reduce(:+)}." 
+elsif calculation == 'p'
+  puts "The product of the integers between 1 and #{user_input} is #{(1..user_input).reduce(:*)}."
+else
+  puts "Oops, unknown input!"
+end
+
+# LS solution:
+# def compute_sum(number)
+#   total = 0
+#   1.upto(number) { |value| total += value }
+#   total
+# end
+
+# def compute_product(number)
+#   total = 1
+#   1.upto(number) { |value| total *= value }
+#   total
+# end
+
+# puts ">> Please enter an integer greater than 0"
+# number = gets.chomp.to_i
+
+# puts ">> Enter 's' to compute the sum, 'p' to compute the product."
+# operation = gets.chomp
+
+# if operation == 's'
+#   sum = compute_sum(number)
+#   puts "The sum of the integers between 1 and #{number} is #{sum}."
+# elsif operation == 'p'
+#   product = compute_product(number)
+#   puts "The product of the integers between 1 and #{number} is #{product}."
+# else
+#   puts "Oops. Unknown operation."
+# end

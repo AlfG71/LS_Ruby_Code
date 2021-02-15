@@ -6,7 +6,6 @@
 
 # You may not use any of the standard conversion methods available in Ruby, such as String#to_i, Integer(), etc. You may, however, use the string_to_integer method from the previous lesson.
 
-require 'pry'
 
 DICTIONARY_HASH = {
   '0' => 0,
@@ -29,7 +28,7 @@ def string_to_signed_integer(str)
   int_arr.compact.each {|num| value = 10 * value + num}
   
   if str.include?('-')
-  	value = -value
+  	value = value * -1
   else
     value
   end

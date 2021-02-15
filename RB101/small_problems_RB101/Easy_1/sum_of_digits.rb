@@ -1,50 +1,40 @@
-def sum(positive_integer)
-	positive_integer.digits.sum
-end
+#Write a method that takes one argument, a positive integer, and returns the sum of its digits.
+
+=begin
+  
+Problem:
+Create a method that takes an integer as an argument
+It will return the total sum of the digits in the original argument
+For a challenge, try writing this without any basic looping constructs (while, until, loop, and each).
+  
+Examples:
 
 puts sum(23) == 5
 puts sum(496) == 19
 puts sum(123_456_789) == 45
+The tests above should print true.
 
-# Write a method that takes one argument, a positive integer, and returns the sum of its digits.
+Data Structure:
+  Input  = Integer
+  Output = Integer
 
-# Examples:
+Algorithm:
 
-# puts sum(23) == 5
-# puts sum(496) == 19
-# puts sum(123_456_789) == 45
-# The tests above should print true.
-
-# For a challenge, try writing this without any basic looping constructs (while, until, loop, and each).
-
-=begin
-  P  (understand the Problem)
-    -Write a new method that takes one argument
-    -The argument is a positive integer
-    -The method returns the sum of all the digits in the argument
-
-  E  (Examples)
-    -puts sum(23) == 5
-    -puts sum(496) == 19
-    -puts sum(123_456_789) == 45
-    -The tests above should print true.
-
-  D  (Data structures)
-    Input:
-      -Integer
-    Output:
-      -Integer
-
-  A  (Algorithm)
-    -create a method called sum with a parameter called (positive_integer)
-    -break down the integer into single integer components
-    -add the single integer components together
-    -return the sum of said components
-
-  C  (Code)
-     def sum(positive_integer)
-     	positive_integer.digits.sum
-     end
-
+ 1) Create a method definition with an Integer parameter sum(int) 
+ 2) Separate the digits that make up the integer argument
+   a) turn the integer into a string
+   b) separate the individual characters and place them into a new object
+   c) turn the individual characters back into integers
+ 3) Add the separated digits into a total 
+ 4) Return the result of the addition
 
 =end
+
+def sum(int)
+  int.digits.sum
+end
+
+
+puts sum(23) == 5
+puts sum(496) == 19
+puts sum(123_456_789) == 45

@@ -1,19 +1,15 @@
 # The || operator returns a truthy value if either or both of its operands are truthy, a falsey value if both operands are falsey. The && operator returns a truthy value if both of its operands are truthy, and a falsey value if either operand is falsey. This works great until you need only one of two conditions to be truthy, the so-called exclusive or.
 
-# In this exercise, you will write a method named xor that takes two arguments, and returns true if exactly one of its arguments is truthy, false otherwise.
+# In this exercise, you will write a function named xor that takes two arguments, and returns true if exactly one of its arguments is truthy, false otherwise. Note that we are looking for a boolean result instead of a truthy/falsy value as returned by || and &&.
 
 # Examples:
 
-# xor?(5.even?, 4.even?) == true
-# xor?(5.odd?, 4.odd?) == true
-# xor?(5.odd?, 4.even?) == false
-# xor?(5.even?, 4.odd?) == false
-
-def xor?(num1, num2)
- num1 == true && num2 != true || num1 == false && num2 == true
+def xor?(val1, val2)
+  return true if val1 == true && val2 != true || val1 != true && val2 == true
+  	false	
 end
 
-p xor?(5.even?, 4.even?) #== true
-p xor?(5.odd?, 4.odd?) #== true
-p xor?(5.odd?, 4.even?) #== false
-p xor?(5.even?, 4.odd?) #== false
+puts xor?(5.even?, 4.even?) == true
+puts xor?(5.odd?, 4.odd?) == true
+puts xor?(5.odd?, 4.even?) == false
+puts xor?(5.even?, 4.odd?) == false

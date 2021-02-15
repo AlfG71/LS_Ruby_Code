@@ -4,29 +4,17 @@
 
 # Using this information, update the method from the previous exercise to determine leap years both before and after 1752.
 
-# def leap_year?(year)
-# 	if year <= 1752 && year % 4 == 0
-# 		return true
-# 	elsif
-# 		year % 400 == 0
-# 		true
-# 	elsif year % 100 == 0 
-# 	  false
-# 	else year % 4 == 0
-# 	end
-# end
-
-# OR 
-
 def leap_year?(year)
-	if year <= 1752 && year % 4 == 0
+	if year < 1752 && year % 4 == 0
 		return true
-	else (year % 400 == 0) || (year % 4 == 0 && year % 100 != 0)
-	end
+  elsif year % 4 == 0 && year % 100 == 0 && year % 400 == 0
+    true
+  elsif year % 4 == 0 && year % 100 != 0
+    true
+  else
+    false
+  end    
 end
-	 	 
-			
-			
 
 p leap_year?(2016) == true
 p leap_year?(2015) == false
