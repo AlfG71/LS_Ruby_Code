@@ -98,11 +98,11 @@ class RPSGame
 
   def display_welcome_message
     puts
-    puts "Welcome to Rock, Paper, Scissors #{human.name}!\n"
+    puts "Welcome to Rock, Paper, Scissors #{human.name}!"
     # puts
     puts "The first one to 5 points wins the game."
     puts "----------------------------------------"
-    puts "You earn a point each time you win a round...\n"
+    puts "You earn a point each time you win a round..."
     # puts
     puts "               Good luck!"
   end

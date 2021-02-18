@@ -1,12 +1,17 @@
 # Implementing Computer personalities
 
 # We have a list of robot names for our Computer class, but other than the name, there's really nothing different about each of them. It'd be interesting to explore how to build different personalities for each robot. For example, R2D2 can always choose "rock". Or, "Hal" can have a very high tendency to choose "scissors", and rarely "rock", but never "paper". You can come up with the rules or personalities for each robot. How would you approach a feature like this?
+module Clearable
+  def clear_screen
+    system('clear')
+  end
+end
 
 class Move
   VALUES = %w(rock paper scissors lizard spock)
 
   def >(other_move)
-    winning_combo.include?(other_move)
+    winning_combo.include?(other_move.name)
   end
 
   def to_s
@@ -19,7 +24,7 @@ class Scissors < Move
   
   def initialize
     @name = "scissors"
-    @winning_combo = (['lizard', 'paper'])
+    @winning_combo = ['lizard', 'paper']
   end
 end
 
@@ -28,7 +33,7 @@ class Rock < Move
 
   def initialize
     @name = "rock"
-    @winning_combo = (['lizard', 'scissors'])
+    @winning_combo = ['lizard', 'scissors']
   end
 end
 
@@ -37,7 +42,7 @@ class Paper < Move
 
   def initialize
     @name = "paper"
-    @winning_combo = (['rock', 'spock'])
+    @winning_combo = ['rock', 'spock']
   end
 end
 
@@ -46,7 +51,7 @@ class Lizard < Move
 
   def initialize
     @name = "lizard"
-    @winning_combo = (['spock', 'paper'])
+    @winning_combo = ['spock', 'paper']
   end
 end
 
@@ -55,7 +60,7 @@ class Spock < Move
 
   def initialize
     @name = "spock"
-    @winning_combo = (['rock', 'scissors'])
+    @winning_combo = ['rock', 'scissors']
   end
 end
 
@@ -63,37 +68,34 @@ class Player
   attr_accessor :move, :name, :score, :moves
 
   def initialize
-    @score = 0            # Tracking score for Human AND Computer
+    @score = 0            
     set_name
-    @moves = Hash.new(0)  # Tracking move history
+    @moves = Hash.new(0)  
   end
 
-  def increase_score      # Increases score on each play
+  def increase_score      
     self.score += 1
   end
 
-  def winning_score?      # Checks to see if any of the players score has reached 5 wins
+  def winning_score?      
     self.score == 5
   end
 
-  def clear_score
-    self.score = 0        # Resets the score back to 0 once the game ends
+  def clear_move_history             
+    self.score = 0            
+    self.moves = Hash.new(0)      
   end
 
-  def clear_moves
-    self.moves = Hash.new(0)
-  end
-
-  def player_moves        # Increment value of chosen move to display in move_history
+  def player_moves 
     moves[move.to_s] += 1 
   end
 
-  def move_history               # display move history
+  def move_history               
     puts "Moves so far for #{name}:"
     moves.each_pair do |move, move_total|
-      puts "#{move} = #{move_total}"
+    puts "#{move} = #{move_total}"
     end
-    p          # sets return value of the method to avoid return value of each_pair
+    nil          
   end
 
   def get_move(choice)
@@ -108,8 +110,10 @@ class Player
 end
 
 class Human < Player
+  include Clearable
+
   def set_name
-    system('clear')
+    clear_screen
     n = nil
     loop do
       puts "Hello there..."
@@ -130,57 +134,24 @@ class Human < Player
       puts "Sorry, invalid choice."
     end
     self.move = get_move(choice)
-    player_moves                 # add move to the moves hash
+    player_moves     
   end
 end
 
 class Computer < Player
   def set_name
-    self.name = %w(R2D2 C3PO Wally).sample
-  end
-
-  def robot_tendencies
-    case name 
-    when 'R2D2' then %w(rock paper scissors).sample
-    when 'C3PO' then Move::VALUES.sample
-    when 'Wally' then 'lizard'
-    end
+    self.name = %w(R2D2 C3PO Wally BB4).sample
   end
 
   def choose
-    self.move = robot_tendencies #get_move(Move::VALUES.sample)
-    player_moves  # add move to the moves hash
+    self.move = get_move(Move::VALUES.sample)
+    player_moves  
   end
 end
 
-# class R2D2 < Computer 
-#   attr_reader :choice
-
-#   def initialize
-#     @name = "R2D2"
-#     @choice = %w(rock paper scissors).sample 
-#   end
-# end
-
-# class C3PO < Computer
-#   attr_reader :choice
-
-#   def initialize
-#     @name = 'C3PO'
-#     @choice = Move::VALUES.sample
-#   end
-# end
-
-# class Wally < Computer
-#   attr_reader :choice
-
-#   def initialize
-#     @name = 'Wally'
-#     @choice = 'lizard'
-#   end
-# end
-
 class RPSGame
+  include Clearable
+
   attr_accessor :human, :computer
 
   def initialize
@@ -209,19 +180,19 @@ class RPSGame
   end
 
   def display_moves
-    puts "#{human} chose #{human.move} and #{computer} chose #{computer.move}.\n"
+    puts "#{human} chose #{human.move} and #{computer} chose #{computer.move}.\n\n"
     round_winner
-    puts "#{human.move_history}"           # move history updated each round for human                  
-    puts "#{computer.move_history}"         # move history updated each round for computer
-  end
+    puts "#{human.move_history}"         
+    puts "#{computer.move_history}"      
+  end   
 
   def round_winner
     if human.move > computer.move
       puts "#{human} won this round!"
-      human.increase_score                 # increment score value on each win
+      human.increase_score                 
     elsif computer.move > human.move
       puts "#{computer} won this round!"
-      computer.increase_score              # increment score value on each win
+      computer.increase_score              
     else
       puts "It's a tie!"
     end
@@ -240,26 +211,24 @@ class RPSGame
 
     puts "Final score was #{human} #{human.score} and #{computer} #{computer.score}!\n\n"
 
-    human.clear_score
-    computer.clear_score
-    human.clear_moves
-    computer.clear_moves
+    human.clear_move_history
+    computer.clear_move_history
   end
 
   def play_again?
     answer = nil
     loop do
-      puts "Would you like to play again? (y/n)"
+      puts "Would you like to play again? (Please enter Y or N)"
       answer = gets.chomp
       break if %w(y n).include?(answer.downcase)
-      puts "Sorry, must be y or n."
+      puts "Sorry, must be Y or N..."
     end
 
     answer.downcase == 'y' ? true : false
   end
 
   def play
-    system('clear')
+    clear_screen
     display_welcome_message
     loop do
         loop do
@@ -268,9 +237,11 @@ class RPSGame
           display_moves
           break if human.winning_score? || computer.winning_score?
         end
-    display_winner
-    break if play_again? == false
+      display_winner
+      break if play_again? == false
+      clear_screen
     end
+    clear_screen
     display_goodbye_message
   end
 end
