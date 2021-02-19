@@ -1,9 +1,18 @@
-# Implementing Computer personalities
-
-# We have a list of robot names for our Computer class, but other than the name, there's really nothing different about each of them. It'd be interesting to explore how to build different personalities for each robot. For example, R2D2 can always choose "rock". Or, "Hal" can have a very high tendency to choose "scissors", and rarely "rock", but never "paper". You can come up with the rules or personalities for each robot. How would you approach a feature like this?
 module Clearable
   def clear_screen
     system('clear')
+  end
+end
+
+module Choosable
+  SHORTHAND_MOVES = { 'r' => 'rock',
+                      'p' => 'paper',
+                      's' => 'scissors',
+                      'l' => 'lizard',
+                      'sp' => 'spock' }
+
+  def choice_translate(choice)
+    SHORTHAND_MOVES.keys.include?(choice) ? SHORTHAND_MOVES[choice] : choice
   end
 end
 
@@ -15,13 +24,13 @@ class Move
   end
 
   def to_s
-    "#{name}"
+    name
   end
 end
 
 class Scissors < Move
   attr_reader :name, :winning_combo
-  
+
   def initialize
     @name = "scissors"
     @winning_combo = ['lizard', 'paper']
@@ -65,47 +74,55 @@ class Spock < Move
 end
 
 class Player
-  attr_accessor :move, :name, :score, :moves
+  include Choosable
+  include Clearable
+
+  attr_accessor :move, :name, :score, :moves, :round_score
+
+  MOVE_CHOICES = [Rock.new, Paper.new, Scissors.new, Lizard.new, Spock.new]
 
   def initialize
-    @score = 0            
+    @score = 0
     set_name
-    @moves = Hash.new(0)  
+    @moves = Hash.new(0)
+    @round_score = 0
   end
 
-  def increase_score      
+  def increase_scores
     self.score += 1
+    self.round_score += 1
   end
 
-  def winning_score?      
+  def winning_score?
     self.score == 5
   end
 
-  def clear_move_history             
-    self.score = 0            
-    self.moves = Hash.new(0)      
+  def clear_move_history
+    self.score = 0
+    self.moves = Hash.new(0)
+    self.round_score = 0
   end
 
-  def player_moves 
-    moves[move.to_s] += 1 
+  def player_moves
+    moves[move.to_s] += 1
   end
 
-  def move_history               
+  def move_history
     puts "Moves so far for #{name}:"
     moves.each_pair do |move, move_total|
-    puts "#{move} = #{move_total}"
+      puts "#{move} = #{move_total}"
     end
-    nil          
+    nil
   end
 
   def get_move(choice)
-    [Rock.new, Paper.new, Scissors.new, Lizard.new, Spock.new].select do |object|
+    MOVE_CHOICES.select do |object|
       choice == object.name
     end[0]
   end
-  
+
   def to_s
-    "#{name}"
+    name
   end
 end
 
@@ -128,13 +145,14 @@ class Human < Player
   def choose
     choice = nil
     loop do
-      puts "Please choose rock, paper, scissors, lizard or spock:"
+      puts "Please choose rock/r, paper/p, scissors/s, lizard/l or spock/sp:"
       choice = gets.chomp
+      choice = choice_translate(choice)
       break if Move::VALUES.include?(choice)
       puts "Sorry, invalid choice."
     end
     self.move = get_move(choice)
-    player_moves     
+    player_moves
   end
 end
 
@@ -145,7 +163,8 @@ class Computer < Player
 
   def choose
     self.move = get_move(Move::VALUES.sample)
-    player_moves  
+    player_moves
+    clear_screen
   end
 end
 
@@ -159,8 +178,10 @@ class RPSGame
     @computer = Computer.new
   end
 
+  private
+
   def display_welcome_message
-    puts
+    clear_screen
     center_text("Welcome to the Rock, Paper, Scissors, Lizard, Spock game!\n\n")
     center_text("The first one to 5 points wins the game.")
     center_text("----------------------------------------")
@@ -169,50 +190,69 @@ class RPSGame
   end
 
   def center_text(text)
-    puts "#{text}".center(74)
+    puts text.center(74)
   end
 
   def display_goodbye_message
-    puts
+    clear_screen
     puts "Thanks for playing #{human}.\n\n"
     puts "Please come play again soon!\n\n"
     puts "And have a wonderful rest of your day!\n\n"
   end
 
+  def display_choices
+    puts "#{human} chose #{human.move}"
+    puts "#{computer} chose #{computer.move}.\n\n"
+  end
+
   def display_moves
-    puts "#{human} chose #{human.move} and #{computer} chose #{computer.move}.\n\n"
+    display_choices
     round_winner
-    puts "#{human.move_history}"         
-    puts "#{computer.move_history}"      
-  end   
+    puts "Round score so far:"
+    puts "#{human} = #{human.round_score}"
+    puts "#{computer} = #{computer.round_score}\n\n"
+    puts human.move_history
+    puts computer.move_history
+  end
 
   def round_winner
     if human.move > computer.move
       puts "#{human} won this round!"
-      human.increase_score                 
+      human.increase_scores
     elsif computer.move > human.move
       puts "#{computer} won this round!"
-      computer.increase_score              
+      computer.increase_scores
     else
       puts "It's a tie!"
     end
-    puts
+  end
+
+  def final_score
+    puts "Final score:"
+    puts "#{human} #{human.score} and #{computer} #{computer.score}!\n\n"
+    human.clear_move_history
+    computer.clear_move_history
   end
 
   def display_winner
+    clear_screen
     if human.winning_score?
       puts "Congrats #{human}, you won the game!\n\n"
       puts "Quick happy celebratory dance... :-)\n\n"
-      sleep 1
-    else computer.winning_score?
-      puts "Aww... #{computer} won the game! :_("
+    elsif computer.winning_score?
+      puts "Aww... #{computer} won the game! :_(\n\n"
       puts "You did your best though...\n\n"
     end
+    final_score
+  end
 
-    puts "Final score was #{human} #{human.score} and #{computer} #{computer.score}!\n\n"
+  def player_choices
+    human.choose
+    computer.choose
+  end
 
-    human.clear_move_history
-    computer.clear_move_history
+  def winner?
+    human.winning_score? || computer.winning_score?
   end
 
   def play_again?
@@ -224,24 +264,21 @@ class RPSGame
       puts "Sorry, must be Y or N..."
     end
 
-    answer.downcase == 'y' ? true : false
+    answer.downcase == 'y'
   end
 
+  public
+
   def play
-    clear_screen
     display_welcome_message
     loop do
-        loop do
-          human.choose
-          computer.choose
-          display_moves
-          break if human.winning_score? || computer.winning_score?
-        end
+      until winner?
+        player_choices
+        display_moves
+      end
       display_winner
       break if play_again? == false
-      clear_screen
     end
-    clear_screen
     display_goodbye_message
   end
 end

@@ -4,6 +4,18 @@ module Clearable
   end
 end
 
+module Choosable
+  SHORTHAND_MOVES = { 'r' => 'rock',
+                      'p' => 'paper',
+                      's' => 'scissors',
+                      'l' => 'lizard',
+                      'sp' => 'spock' }
+
+  def choice_translate(choice)
+    SHORTHAND_MOVES.keys.include?(choice) ? SHORTHAND_MOVES[choice] : choice
+  end
+end
+
 class Move
   VALUES = %w(rock paper scissors lizard spock)
 
@@ -62,7 +74,10 @@ class Spock < Move
 end
 
 class Player
-  attr_accessor :move, :name, :score, :moves
+  include Choosable
+  include Clearable
+
+  attr_accessor :move, :name, :score, :moves, :round_score
 
   MOVE_CHOICES = [Rock.new, Paper.new, Scissors.new, Lizard.new, Spock.new]
 
@@ -70,10 +85,12 @@ class Player
     @score = 0
     set_name
     @moves = Hash.new(0)
+    @round_score = 0
   end
 
-  def increase_score
+  def increase_scores
     self.score += 1
+    self.round_score += 1
   end
 
   def winning_score?
@@ -83,6 +100,7 @@ class Player
   def clear_move_history
     self.score = 0
     self.moves = Hash.new(0)
+    self.round_score = 0
   end
 
   def player_moves
@@ -127,8 +145,9 @@ class Human < Player
   def choose
     choice = nil
     loop do
-      puts "Please choose rock, paper, scissors, lizard or spock:"
+      puts "Please choose rock/r, paper/p, scissors/s, lizard/l or spock/sp:"
       choice = gets.chomp
+      choice = choice_translate(choice)
       break if Move::VALUES.include?(choice)
       puts "Sorry, invalid choice."
     end
@@ -145,6 +164,7 @@ class Computer < Player
   def choose
     self.move = get_move(Move::VALUES.sample)
     player_moves
+    clear_screen
   end
 end
 
@@ -157,6 +177,8 @@ class RPSGame
     @human = Human.new
     @computer = Computer.new
   end
+
+  private
 
   def display_welcome_message
     clear_screen
@@ -178,10 +200,17 @@ class RPSGame
     puts "And have a wonderful rest of your day!\n\n"
   end
 
-  def display_moves
+  def display_choices
     puts "#{human} chose #{human.move}"
     puts "#{computer} chose #{computer.move}.\n\n"
+  end
+
+  def display_moves
+    display_choices
     round_winner
+    puts "Round score so far:"
+    puts "#{human} = #{human.round_score}"
+    puts "#{computer} = #{computer.round_score}\n\n"
     puts human.move_history
     puts computer.move_history
   end
@@ -189,10 +218,10 @@ class RPSGame
   def round_winner
     if human.move > computer.move
       puts "#{human} won this round!"
-      human.increase_score
+      human.increase_scores
     elsif computer.move > human.move
       puts "#{computer} won this round!"
-      computer.increase_score
+      computer.increase_scores
     else
       puts "It's a tie!"
     end
@@ -237,6 +266,8 @@ class RPSGame
 
     answer.downcase == 'y'
   end
+
+  public
 
   def play
     display_welcome_message
