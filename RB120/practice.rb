@@ -1,59 +1,28 @@
-  SHORTHAND_MOVES = {'r' => 'rock', 
-                     'p' => 'paper', 
-                     's' => 'scissors', 
-                     'l' => 'lizard', 
-                     'sp' => 'spock'}
+  WINNING_LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9], # Horizontal
+                   [1, 4, 7], [2, 5, 8], [3, 6, 9], # Vertical
+                   [1, 5, 9], [3, 5, 7]]
 
-  def choice_translate(choice)
-    SHORTHAND_MOVES.keys.include?(choice) ? SHORTHAND_MOVES[choice] : choice
+hsh = Hash.new(0)
+
+(1..9).each do |num|
+  hsh[num] = ' '
+end             
+
+p hsh      
+
+hsh[1], hsh[2] = 'X', 'X'
+p hsh
+a = nil
+  def winning_marker 
+    WINNING_LINES.each do |line| #line is an array representing a winning line
+      # binding.pry
+
+      if @squares.values_at(*line).all? {|mark|} mark == HUMAN_MARKER}
+        return TTTGame::HUMAN_MARKER
+      elsif @squares.values_at(*line).all? {|mark|} mark == COMPUTER_MARKER}
+        return TTTGame::COMPUTER_MARKER
+      end
+    end
+    nil
   end
-
-p choice_translate('p')
-
-
-
-
-
-
-#   SHORTHAND_MOVES = {'r' => 'rock', 
-#                      'p' => 'paper', 
-#                      's' => 'scissors', 
-#                      'l' => 'lizard', 
-#                      'sp' => 'spock'}
-
-# new_hash = Hash.new(0)
-
-# p SHORTHAND_MOVES.include?('r')  
-# p SHORTHAND_MOVES['r']  
-# new_hash[SHORTHAND_MOVES['R'.downcase]] += 1
-# p new_hash                 
-
-
-
-# module Describable
-#   def describe_shape
-#     "I am a #{self.class} and have #{self.class::SIDES} sides."
-#   end
-# end
-
-# class Shape
-#   include Describable
-
-#   def self.sides
-#     self::SIDES
-#   end
-# end
-
-# class Quadrilateral < Shape
-#   SIDES = 4
-
-#   # def sides
-#   #   SIDES
-#   # end
-# end
-
-# class Square < Quadrilateral; end
-
-# p Square.sides # => 4
-# p Square.new.sides # => 4
-# p Square.new.describe_shape # => "I am a Square and have 4 sides."
+p a
